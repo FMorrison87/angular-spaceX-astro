@@ -3,22 +3,24 @@ import { SpaceXService } from '../+state/spacex.service';
 import { Starlink } from '../+state/starlinks.model';
 
 import { TableModule } from 'primeng/table';
-
-interface Column {
-  field: string;
-  header: string;
-}
+import { ButtonModule } from 'primeng/button';
+import {
+  Column,
+  spaceTrackColDefs,
+  starlinkColDefs,
+} from './starlink.columnDefs';
 
 @Component({
   selector: 'app-starlink',
   standalone: true,
-  imports: [TableModule],
+  imports: [TableModule, ButtonModule],
   templateUrl: './starlink.component.html',
   styleUrl: './starlink.component.css',
 })
 export class StarlinkComponent implements OnInit {
   starlinks: Starlink[] = [new Starlink()];
-  cols: Column[] = [];
+  starlinkCols: Column[] = starlinkColDefs;
+  spaceTrackCols: Column[] = spaceTrackColDefs;
 
   constructor(private spaceXService: SpaceXService) {}
 
@@ -27,12 +29,6 @@ export class StarlinkComponent implements OnInit {
       this.starlinks = sats.flatMap((sat) => sat);
       console.log('sats:', this.starlinks);
       const starlinkEmpty = new Starlink();
-      console.log(Object.keys(starlinkEmpty), 'IT EMPTY');
-
-      this.cols = Object.keys(starlinkEmpty).map((key) => ({
-        field: key,
-        header: key.toUpperCase(),
-      }));
     });
   }
 }
