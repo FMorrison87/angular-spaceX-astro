@@ -1,3 +1,4 @@
+@if (starlinks$ | async; as starlinks) {
 <p-table
   [columns]="starlinkCols"
   [value]="starlinks"
@@ -37,7 +38,9 @@
       </td>
       @for (col of columns; track col) {
       <td>
+        @if (col.field === 'spaceTrack') { See expansion for info } @else {
         {{ rowData[col.field] }}
+        }
       </td>
       }
     </tr>
@@ -63,3 +66,4 @@
     </tr>
   </ng-template>
 </p-table>
+}

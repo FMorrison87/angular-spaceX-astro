@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { SpaceXService } from '../+state/spacex.service';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Starlink } from '../+state/starlinks.model';
 
 import { TableModule } from 'primeng/table';
@@ -9,26 +8,31 @@ import {
   spaceTrackColDefs,
   starlinkColDefs,
 } from './starlink.columnDefs';
+import { StarlinkService } from '../+state/starlink.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-starlink',
   standalone: true,
-  imports: [TableModule, ButtonModule],
+  imports: [TableModule, ButtonModule, AsyncPipe],
   templateUrl: './starlink.component.html',
   styleUrl: './starlink.component.css',
 })
 export class StarlinkComponent implements OnInit {
-  starlinks: Starlink[] = [new Starlink()];
+  private starlinkService = inject(StarlinkService);
+  private destroyRef = inject(DestroyRef);
+
+  loading$: Observable<boolean> = this.starlinkService.loading$;
+  starlinks$: Observable<Starlink[]> = this.starlinkService.entities$;
   starlinkCols: Column[] = starlinkColDefs;
   spaceTrackCols: Column[] = spaceTrackColDefs;
 
-  constructor(private spaceXService: SpaceXService) {}
-
-  ngOnInit(): void {
-    this.spaceXService.getStarlinkSats().subscribe((sats) => {
-      this.starlinks = sats.flatMap((sat) => sat);
-      console.log('sats:', this.starlinks);
-      const starlinkEmpty = new Starlink();
-    });
+  ngOnInit() {
+    this.starlinkService
+      .getAll()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 }
