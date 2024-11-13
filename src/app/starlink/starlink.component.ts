@@ -12,6 +12,7 @@ import { StarlinkService } from '../+state/starlink.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-starlink',
