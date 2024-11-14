@@ -1,0 +1,9 @@
+.card-wrapper {
+  height: calc(100vh - 5.5rem);
+  overflow: auto;
+}
+
+::ng-deep .p-datatable-thead th {
+  background: rgba(96, 165, 250, 0.16);
+  color: rgba(255, 255, 255, 0.87);
+}

@@ -1,1 +1,58 @@
-<p>spacetrack works!</p>
+<div class="flex align-items-center justify-content-between">
+  <h1>Starlink: {{ starlinkId }} - Spacetrack</h1>
+  <p-button
+    [routerLink]="['/']"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+    [link]="true"
+    icon="pi pi-angle-left"
+    label="Back"
+  ></p-button>
+</div>
+
+@if (spaceTrack) {
+<div class="card-wrapper">
+  <!-- <p-panel header="Spacetrack"> -->
+  <p-table
+    [columns]="spaceTrackCols"
+    [value]="[spaceTrack]"
+    dataKey="id"
+    [tableStyle]="{ 'min-width': 'calc(100vw - 3.3rem)' }"
+    styleClass="p-datatable-gridlines"
+    [scrollable]="true"
+    scrollHeight="flex"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        @for (col of columns; track col) {
+        <th>
+          {{ col.header }}
+        </th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body">
+      @for (item of spaceTrack | keyvalue; track item) {
+      <tr>
+        <td>
+          <strong>{{ item.key }}</strong>
+        </td>
+        <td>{{ item.value }}</td>
+      </tr>
+      }
+    </ng-template>
+    <tbody>
+      @for (item of spaceTrack | keyvalue; track item) {
+      <tr>
+        <td>
+          <strong>{{ item.key }}:</strong>
+        </td>
+        <td>{{ item.value }}</td>
+      </tr>
+      }
+    </tbody>
+  </p-table>
+  <!-- </p-panel> -->
+</div>
+
+}

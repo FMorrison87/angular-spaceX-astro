@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  EntityActionOptions,
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
@@ -9,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class StarlinkService extends EntityCollectionServiceBase<Starlink> {
+  private baseUrl = 'https://api.spacexdata.com';
+
   constructor(
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
     private http: HttpClient
@@ -17,9 +20,7 @@ export class StarlinkService extends EntityCollectionServiceBase<Starlink> {
   }
 
   override getAll(): Observable<Starlink[]> {
-    const baseUrl = 'https://api.spacexdata.com';
-
-    return this.http.get<Starlink[]>(`${baseUrl}/v4/starlink`).pipe(
+    return this.http.get<Starlink[]>(`${this.baseUrl}/v4/starlink`).pipe(
       switchMap((starlinks) => {
         // Update the store with the fetched entities
         this.upsertManyInCache(starlinks);
@@ -28,6 +29,21 @@ export class StarlinkService extends EntityCollectionServiceBase<Starlink> {
       catchError((error) => {
         console.error('Error fetching starlinks:', error);
         return of([]);
+      })
+    );
+  }
+
+  override getByKey(
+    key: any,
+    options?: EntityActionOptions
+  ): Observable<Starlink> {
+    return this.http.get<Starlink>(`${this.baseUrl}/v4/starlink/${key}`).pipe(
+      switchMap((starlink) => {
+        return of(starlink);
+      }),
+      catchError((error) => {
+        console.error('Error fetching starlinks:', error);
+        return of();
       })
     );
   }
