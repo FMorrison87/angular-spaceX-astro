@@ -1,27 +1,24 @@
-# AngularSpaceXTest
+# SpaceX Starlink Satellite Demo / Angular & NgRx Data
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.11.
+The purpose of this project is to display some of my skills in Angular, particularly in utilizing a REST API to acquire data from an outside endpoint and caching the data as entities using the NgRx Data package.
 
-## Development server
+The main page of the application is a paginated table that displays information available on Starlink satellites. Once a successful network request is completed the data is cached using NgRx Data and recalled using the cache as the user navigates through the applications routing. A network request will only re-fetch the data if the entity cache is empty.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+From the main page the user can also choose to view spacetrack information for each satellite. This routes the user to a new page with a table displaying this additional data. The entity cache is used to fetch the specific entity and relevant information, but a fallback is in place to make a network request for a single entity based on the passed-in id if the cache is empty (if the user refreshes or navigates to the direct URL). The user can also navigate back to the main page, which will only hit the endpoint again if the entity cache is empty.
 
-## Code scaffolding
+## Technologies/APIs Used
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- [SpaceX Endpoint for Starlink Satellites](https://github.com/r-spacex/SpaceX-API/tree/master/docs/starlink/v4)
 
-## Build
+  - SpaceX Starlink satellite data
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- [NgRx Data](https://ngrx.io/guide/data)
 
-## Running unit tests
+  - State management package that stores data using the entity pattern
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- [PrimeNg](https://primeng.org/)
 
-## Running end-to-end tests
+  - Angular UI suite
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [PrimeFlex](https://primeflex.org/)
+  - CSS Utility library designed to pair with PrimeNg
