@@ -1,7 +1,15 @@
 <h1>Starlink Satellites</h1>
 <div class="card-wrapper">
-  @if (starlinks$ | async; as starlinks) {
-  <p-table
+  @if (starlinkStore.starlinks$() | async; as starlinks) {
+  <div class="ag-theme-astro">
+    <ag-grid-angular
+      [rowData]="starlinks"
+      [columnDefs]="starlinkCols"
+      style="height: 100%"
+    />
+  </div>
+
+  <!-- <p-table
     [columns]="starlinkCols"
     [value]="starlinks"
     dataKey="id"
@@ -30,13 +38,11 @@
         @for (col of columns; track col) {
         <td>
           @if (col.field === 'spaceTrack') {
-          <p-button
+          <RuxButton
             [routerLink]="['/starlink/spacetrack/', rowData['id']]"
             routerLinkActive="active"
             ariaCurrentWhenActive="page"
-            [link]="true"
-            label="View"
-          ></p-button>
+          >View</RuxButton>
           } @else {
           {{ rowData[col.field] }}
           }
@@ -44,6 +50,6 @@
         }
       </tr>
     </ng-template>
-  </p-table>
+  </p-table> -->
   }
 </div>

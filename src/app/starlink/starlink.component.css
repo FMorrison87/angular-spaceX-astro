@@ -2,3 +2,7 @@
   height: calc(100vh - 5.5rem);
   overflow: auto;
 }
+
+.ag-theme-astro {
+  height: 100vh;
+}

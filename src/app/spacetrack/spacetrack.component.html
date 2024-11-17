@@ -1,19 +1,19 @@
 <div class="flex align-items-center justify-content-between">
   <h1>Starlink: {{ starlinkId }} - Spacetrack</h1>
-  <p-button
+  <RuxButton
     [routerLink]="['/']"
     routerLinkActive="active"
     ariaCurrentWhenActive="page"
-    [link]="true"
     icon="pi pi-angle-left"
-    label="Back"
-  ></p-button>
+    borderless
+    >Back</RuxButton
+  >
 </div>
 
-@if (spaceTrack) {
+@if (starlinksStore.starlink$()) {
 <div class="card-wrapper">
-  <!-- <p-panel header="Spacetrack"> -->
-  <p-table
+  <ag-grid-angular [rowData]="" [columnDefs]="spaceTrackCols" />
+  <!-- <p-table
     [columns]="spaceTrackCols"
     [value]="[spaceTrack]"
     dataKey="id"
@@ -51,8 +51,7 @@
       </tr>
       }
     </tbody>
-  </p-table>
-  <!-- </p-panel> -->
+  </p-table> -->
 </div>
 
 }

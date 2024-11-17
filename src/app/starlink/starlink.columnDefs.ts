@@ -1,50 +1,51 @@
 import { Starlink } from '../+state/starlinks.model';
+import { ColDef } from 'ag-grid-community';
 
-export interface Column {
-  field: string;
-  header: string;
-  sortable: boolean;
-}
+// export interface ColDef<T> {
+//   field: string;
+//   headerName: string;
+//   sortable: boolean;
+// }
 
-export const starlinkColDefs: Column[] = [
+export const starlinkColDefs: ColDef<Starlink>[] = [
   {
     field: 'id',
-    header: 'id',
+    headerName: 'id',
     sortable: true,
   },
   {
     field: 'version',
-    header: 'Version',
+    headerName: 'Version',
     sortable: false,
   },
   {
     field: 'launch',
-    header: 'Launch',
+    headerName: 'Launch',
     sortable: false,
   },
   {
     field: 'longitude',
-    header: 'Longitude',
+    headerName: 'Longitude',
     sortable: false,
   },
   {
     field: 'latitude',
-    header: 'Latitude',
+    headerName: 'Latitude',
     sortable: false,
   },
   {
     field: 'height_km',
-    header: 'Height (km)',
+    headerName: 'Height (km)',
     sortable: true,
   },
   {
     field: 'velocity_kms',
-    header: 'Velocity (kms)',
+    headerName: 'Velocity (kms)',
     sortable: true,
   },
   {
     field: 'spaceTrack',
-    header: 'Spacetrack',
+    headerName: 'Spacetrack',
     sortable: false,
   },
 ];

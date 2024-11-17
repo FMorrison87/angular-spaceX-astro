@@ -1,47 +1,37 @@
 import { Component, inject, Input } from '@angular/core';
-import { StarlinkService } from '../+state/starlink.service';
 import { SpaceTrack } from '../+state/starlinks.model';
 import { KeyValuePipe } from '@angular/common';
-import { TableModule } from 'primeng/table';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { map } from 'rxjs';
+import { StarlinksStore } from '../+state/starlinks.store';
+import { AgGridAngular } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-spacetrack',
   standalone: true,
-  imports: [
-    KeyValuePipe,
-    TableModule,
-    ButtonModule,
-    RouterLinkActive,
-    RouterLink,
-  ],
+  imports: [KeyValuePipe, RouterLinkActive, RouterLink, AgGridAngular],
   templateUrl: './spacetrack.component.html',
   styleUrl: './spacetrack.component.css',
 })
 export class SpacetrackComponent {
-  private starlinkService = inject(StarlinkService);
+  readonly starlinksStore = inject(StarlinksStore);
   spaceTrack: SpaceTrack | undefined;
   starlinkId: string = '';
-  spaceTrackCols = [{ header: 'Key' }, { header: 'Value' }];
+  spaceTrackCols = [{ headerName: 'Key' }, { headerName: 'Value' }];
 
   @Input()
   set id(id: string) {
     this.starlinkId = id;
 
     // look for in entity cache first
-    this.starlinkService.entityMap$
-      .pipe(map((entityMap) => entityMap[id]))
-      .subscribe((entity) => {
-        this.spaceTrack = entity?.spaceTrack;
-      });
+    // this.starlinksStore.starlinks$()
+    //   .pipe(map((entityMap) => entityMap[id]))
+    //   .subscribe((entity) => {
+    //     this.spaceTrack = entity?.spaceTrack;
+    //   });
 
     // if absent from entity cache (e.g. page refresh), make request
     if (this.spaceTrack === undefined) {
-      this.starlinkService.getByKey(id).subscribe((starlink) => {
-        this.spaceTrack = starlink.spaceTrack;
-      });
+      this.starlinksStore.getOne(id);
     }
   }
 }
