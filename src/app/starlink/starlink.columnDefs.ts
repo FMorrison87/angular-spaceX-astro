@@ -1,17 +1,13 @@
 import { Starlink } from '../+state/starlinks.model';
 import { ColDef } from 'ag-grid-community';
-
-// export interface ColDef<T> {
-//   field: string;
-//   headerName: string;
-//   sortable: boolean;
-// }
+import { ButtonRendererComponent } from '../button-renderer/button-renderer.component';
 
 export const starlinkColDefs: ColDef<Starlink>[] = [
   {
     field: 'id',
     headerName: 'id',
     sortable: true,
+    initialSort: 'desc',
   },
   {
     field: 'version',
@@ -44,8 +40,10 @@ export const starlinkColDefs: ColDef<Starlink>[] = [
     sortable: true,
   },
   {
-    field: 'spaceTrack',
+    field: 'id',
     headerName: 'Spacetrack',
+    cellRenderer: ButtonRendererComponent,
+    width: 130,
     sortable: false,
   },
 ];

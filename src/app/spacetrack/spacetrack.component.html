@@ -1,57 +1,22 @@
-<div class="flex align-items-center justify-content-between">
+<div class="spacetrack-header">
   <h1>Starlink: {{ starlinkId }} - Spacetrack</h1>
-  <RuxButton
+  <rux-button
     [routerLink]="['/']"
     routerLinkActive="active"
     ariaCurrentWhenActive="page"
-    icon="pi pi-angle-left"
     borderless
-    >Back</RuxButton
+    icon="keyboard-arrow-left"
+    >Back</rux-button
   >
 </div>
-
-@if (starlinksStore.starlink$()) {
+@if (starlinksStore.starlink()) {
 <div class="card-wrapper">
-  <ag-grid-angular [rowData]="" [columnDefs]="spaceTrackCols" />
-  <!-- <p-table
-    [columns]="spaceTrackCols"
-    [value]="[spaceTrack]"
-    dataKey="id"
-    [tableStyle]="{ 'min-width': 'calc(100vw - 3.3rem)' }"
-    styleClass="p-datatable-gridlines"
-    [scrollable]="true"
-    scrollHeight="flex"
-  >
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        @for (col of columns; track col) {
-        <th>
-          {{ col.header }}
-        </th>
-        }
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body">
-      @for (item of spaceTrack | keyvalue; track item) {
-      <tr>
-        <td>
-          <strong>{{ item.key }}</strong>
-        </td>
-        <td>{{ item.value }}</td>
-      </tr>
-      }
-    </ng-template>
-    <tbody>
-      @for (item of spaceTrack | keyvalue; track item) {
-      <tr>
-        <td>
-          <strong>{{ item.key }}:</strong>
-        </td>
-        <td>{{ item.value }}</td>
-      </tr>
-      }
-    </tbody>
-  </p-table> -->
+  <div class="ag-theme-astro">
+    <ag-grid-angular
+      [rowData]="starlinksStore.starlink()?.spaceTrack | keyvalue"
+      [columnDefs]="spaceTrackCols"
+      style="height: 100%"
+    />
+  </div>
 </div>
-
 }

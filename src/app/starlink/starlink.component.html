@@ -1,6 +1,6 @@
 <h1>Starlink Satellites</h1>
 <div class="card-wrapper">
-  @if (starlinkStore.starlinks$() | async; as starlinks) {
+  @if (starlinkStore.starlinks(); as starlinks) {
   <div class="ag-theme-astro">
     <ag-grid-angular
       [rowData]="starlinks"
